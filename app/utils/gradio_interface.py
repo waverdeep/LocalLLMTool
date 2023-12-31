@@ -23,5 +23,5 @@ demo = gr.ChatInterface(
         gr.Textbox("You are helpful AI.", label="System Prompt"), 
         gr.Slider(10, 100)
     ]
-)
+).queue()
     
