@@ -9,6 +9,26 @@ def echo(message, history, system_prompt, tokens):
         yield response[: i+1]
 
 
+chat = gr.ChatInterface(
+                echo, 
+                chatbot=gr.Chatbot(height="50vh"),
+                textbox=gr.Textbox(
+                    placeholder="Ask me a question", 
+                    container=False, scale=7),
+                stop_btn=None,
+                additional_inputs=[
+                    gr.Textbox(
+                        "You are helpful AI.", 
+                        label="System Prompt"), 
+                    gr.Slider(
+                        minimum=0, 
+                        maximum=1, 
+                        step=0.1,
+                        value=0.5,
+                        label="temperature")
+                ]
+            ).queue()
+
 with gr.Blocks(theme="soft") as demo:
     with gr.Row():
         with gr.Column():
@@ -30,23 +50,5 @@ with gr.Blocks(theme="soft") as demo:
                 )
             
         with gr.Column():
-            gr.ChatInterface(
-                echo, 
-                chatbot=gr.Chatbot(height="50vh"),
-                textbox=gr.Textbox(
-                    placeholder="Ask me a question", 
-                    container=False, scale=7),
-                stop_btn=None,
-                additional_inputs=[
-                    gr.Textbox(
-                        "You are helpful AI.", 
-                        label="System Prompt"), 
-                    gr.Slider(
-                        minimum=0, 
-                        maximum=1, 
-                        step=0.1,
-                        value=0.5,
-                        label="temperature")
-                ]
-            ).queue().render()
+            chat.render()
     
