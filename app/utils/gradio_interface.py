@@ -40,7 +40,17 @@ with gr.Blocks(theme="soft") as demo:
             )
     with gr.Row():
         with gr.Column():
-            head_info_group
+            with gr.Group():
+            gr.Dropdown(
+                choices=[
+                    "Mistral-7B-OpenOrca-GGUF",
+                    "Mistral-7B-Instruct-v0.2",
+                    "OpenAI-GPT-3.5-Turbo"
+                ]
+            )
+            gr.Button(
+                value="Select Model"
+            )
             
         with gr.Column():
             chat.render()
