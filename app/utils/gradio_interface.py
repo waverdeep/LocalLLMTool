@@ -14,29 +14,31 @@ def echo(message, history, system_prompt, tokens):
 
 
 chat = gr.ChatInterface(
-                echo, 
-                chatbot=gr.Chatbot(height="50vh"),
-                textbox=gr.Textbox(
-                    placeholder="ask me a question", 
-                    container=False, 
-                    scale=7
-                ),
-                stop_btn=None,
-                additional_inputs=[
-                    gr.Textbox(
-                        "You are helpful AI.", 
-                        label="system prompt"), 
-                    gr.Slider(
-                        minimum=0, 
-                        maximum=1, 
-                        step=0.1,
-                        value=0.5,
-                        label="temperature")
-                ],
-                label="multi-turn"
-            ).queue()
+    echo, 
+    chatbot=gr.Chatbot(height="50vh"),
+    textbox=gr.Textbox(
+        placeholder="ask me a question", 
+        container=False, 
+        scale=7
+    ),
+    stop_btn=None,
+    additional_inputs=[
+        gr.Textbox(
+            "You are helpful AI.", 
+            label="system prompt"), 
+        gr.Slider(
+            minimum=0, 
+            maximum=1, 
+            step=0.1,
+            value=0.5,
+            label="temperature")
+    ],
+).queue()
 
-with gr.Blocks(theme="soft") as demo:
+with gr.Blocks(
+    theme="soft",
+    title="MyLLMTool",
+    head="MyLLMTool by waverDeep") as demo:
     with gr.Row():
         with gr.Column():
             gr.Label(
