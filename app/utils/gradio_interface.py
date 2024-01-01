@@ -40,7 +40,7 @@ with gr.Blocks(theme="soft") as demo:
             )
     with gr.Row():
         with gr.Column():
-            head_info_group.render()
+            head_info_group
             
         with gr.Column():
             chat.render()
