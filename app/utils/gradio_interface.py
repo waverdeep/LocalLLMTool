@@ -2,9 +2,9 @@ import gradio as gr
 import time
 
 
-def allocate_model():
+def allocate_model(model_name):
     time.sleep(3)
-    pass
+    return {model_name: 3}
 
 
 def echo(message, history, system_prompt, tokens):
@@ -55,6 +55,9 @@ with gr.Blocks(
                     value="Mistral-7B-OpenOrca-GGUF",
                     interactive=True,
                     label="selet model"
+                ),
+                allocated_model = gr.Label(
+                    label="result"
                 )
                 allocate_button = gr.Button(
                     value="Allocate"
@@ -62,7 +65,7 @@ with gr.Blocks(
                 allocate_button.click(
                     fn=allocate_model,
                     inputs=model_dropdown,
-                    outputs=None,
+                    outputs=allocated_model,
                     api_name="allocate_model"
                 )
         with gr.Column():
