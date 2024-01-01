@@ -20,18 +20,28 @@ chat = gr.ChatInterface(
                 ]
             ).queue()
 
+with gr.Group() as head_info_group:
+    gr.Dropdown(
+        choices=[
+            "Mistral-7B-OpenOrca-GGUF",
+            "Mistral-7B-Instruct-v0.2",
+            "OpenAI-GPT-3.5-Turbo"
+        ]
+    )
+    gr.Button(
+        value="Select Model"
+    )
+
 with gr.Blocks(theme="soft") as demo:
     with gr.Row():
         with gr.Column():
-            gr.Dropdown(
-                choices=[
-                    "Mistral-7B-OpenOrca-GGUF"
-                ],
-                value="Mistral-7B-OpenOrca-GGUF"
+            gr.Label(
+                value="MyLLMTools by waverDeep"
             )
-            gr.Button(
-                value="Submit"
-            )
+    with gr.Row():
+        with gr.Column():
+            head_info_group.render()
+            
         with gr.Column():
             chat.render()
     
