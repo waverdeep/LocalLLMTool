@@ -2,7 +2,7 @@ name: Deploy LocalLLMTool
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
 
 env:
   DOCKER_IMAGE: ghcr.io/${{ github.actor }}/local_llm_tool
