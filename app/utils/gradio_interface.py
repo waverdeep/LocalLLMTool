@@ -4,33 +4,10 @@ import time
 
 def echo(message, history, system_prompt, tokens):
     response = f"System prompt: {system_prompt}\n Message: {message}."
-    for i in range(min(len(response), int(tokens))):
+    for i in range(len(response)):
         time.sleep(0.1)
         yield response[: i+1]
 
-
-chat = gr.ChatInterface(
-                echo, 
-                chatbot=gr.Chatbot(height="50vh"),
-                textbox=gr.Textbox(placeholder="Ask me a question", container=False, scale=7),
-                stop_btn=None,
-                additional_inputs=[
-                    gr.Textbox("You are helpful AI.", label="System Prompt"), 
-                    gr.Slider(10, 100)
-                ]
-            ).queue()
-
-with gr.Group() as head_info_group:
-    gr.Dropdown(
-        choices=[
-            "Mistral-7B-OpenOrca-GGUF",
-            "OpenAI-GPT-3.5-Turbo"
-        ],
-        value="Mistral-7B-OpenOrca-GGUF"
-    )
-    gr.Button(
-        value="Select Model"
-    )
 
 with gr.Blocks(theme="soft") as demo:
     with gr.Row():
@@ -44,14 +21,32 @@ with gr.Blocks(theme="soft") as demo:
                 gr.Dropdown(
                     choices=[
                         "Mistral-7B-OpenOrca-GGUF",
-                        "Mistral-7B-Instruct-v0.2",
                         "OpenAI-GPT-3.5-Turbo"
-                    ]
+                    ],
+                    value="Mistral-7B-OpenOrca-GGUF",
                 )
                 gr.Button(
-                    value="Select Model"
+                    value="Allocate"
                 )
             
         with gr.Column():
-            chat.render()
+            gr.ChatInterface(
+                echo, 
+                chatbot=gr.Chatbot(height="50vh"),
+                textbox=gr.Textbox(
+                    placeholder="Ask me a question", 
+                    container=False, scale=7),
+                stop_btn=None,
+                additional_inputs=[
+                    gr.Textbox(
+                        "You are helpful AI.", 
+                        label="System Prompt"), 
+                    gr.Slider(
+                        minimum=0, 
+                        maximum=1, 
+                        step=0.1,
+                        value=0.5,
+                        label="temperature")
+                ]
+            ).queue().render()
     
