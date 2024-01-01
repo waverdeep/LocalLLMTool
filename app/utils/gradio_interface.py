@@ -19,7 +19,7 @@ def allocate_model(model_name, private_key):
         return {}
 
 
-def echo(predict, history, system_prompt, temperature):
+def predict(message, history, system_prompt, temperature):
     history_langchain_format = []
     for human, ai in history:
         history_langchain_format.append(HumanMessage(content=human))
