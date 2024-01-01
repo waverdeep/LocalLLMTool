@@ -3,6 +3,7 @@ import time
 
 
 def allocate_model():
+    time.sleep(3)
     pass
 
 
@@ -37,8 +38,7 @@ chat = gr.ChatInterface(
 
 with gr.Blocks(
     theme="soft",
-    title="MyLLMTool",
-    head="MyLLMTool by waverDeep") as demo:
+    title="MLT",) as demo:
     with gr.Row():
         with gr.Column():
             gr.Label(
