@@ -4,7 +4,7 @@ import time
 
 def allocate_model(model_name):
     time.sleep(3)
-    return {model_name: 3}
+    return {model_name: 1}
 
 
 def echo(message, history, system_prompt, tokens):
