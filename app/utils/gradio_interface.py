@@ -4,7 +4,7 @@ import time
 
 def allocate_model(model_name):
     time.sleep(3)
-    return model_name
+    return {model_name: 3}
 
 
 def echo(message, history, system_prompt, tokens):
@@ -55,7 +55,7 @@ with gr.Blocks(
                     value="Mistral-7B-OpenOrca-GGUF",
                     interactive=True,
                     label="selet model"
-                ),
+                )
                 allocated_model = gr.Label(
                     label="result"
                 )
@@ -64,8 +64,8 @@ with gr.Blocks(
                 )
                 allocate_button.click(
                     fn=allocate_model,
-                    inputs=model_dropdown,
-                    outputs=allocated_model,
+                    inputs=[model_dropdown],
+                    outputs=[allocated_model],
                     api_name="allocate_model"
                 )
         with gr.Column():
