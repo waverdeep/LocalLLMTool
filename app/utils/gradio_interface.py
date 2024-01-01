@@ -1,21 +1,36 @@
 import gradio as gr
 import time
 
-
-def allocate_model(model_name):
-    time.sleep(3)
-    return {model_name: 1}
+from langchain.chat_models import ChatOpenAI
 
 
-def echo(message, history, system_prompt, tokens):
-    response = f"System prompt: {system_prompt}\n Message: {message}."
-    for i in range(len(response)):
-        time.sleep(0.1)
-        yield response[: i+1]
+chat_model = None
+
+
+def allocate_model(model_name, private_key):
+    if model_name == "LangChain-OpenAI-GPT-3.5-turbo":
+        chat_model = ChatOpenAI(
+            openai_api_key=private_key, 
+            model="gpt-3.5-turbo"
+        )
+        return {model_name: 1}
+    else:
+        chat_model = None
+        return {}
+
+
+def echo(predict, history, system_prompt, temperature):
+    history_langchain_format = []
+    for human, ai in history:
+        history_langchain_format.append(HumanMessage(content=human))
+        history_langchain_format.append(AIMessage(content=ai))
+    history_langchain_format.append(HumanMessage(content=message))
+    gpt_response = llm(history_langchain_format)
+    yield gpt_response.content
 
 
 chat = gr.ChatInterface(
-    echo, 
+    predict, 
     chatbot=gr.Chatbot(height="50vh"),
     textbox=gr.Textbox(
         placeholder="ask me a question", 
@@ -50,11 +65,14 @@ with gr.Blocks(
                 model_dropdown = gr.Dropdown(
                     choices=[
                         "Mistral-7B-OpenOrca-GGUF",
-                        "OpenAI-GPT-3.5-Turbo"
+                        "LangChain-OpenAI-GPT-3.5-turbo"
                     ],
                     value="Mistral-7B-OpenOrca-GGUF",
                     interactive=True,
                     label="selet model"
+                )
+                private_key = gr.Textbox(
+                    label="private key"
                 )
                 allocated_model = gr.Label(
                     label="result"
@@ -64,7 +82,7 @@ with gr.Blocks(
                 )
                 allocate_button.click(
                     fn=allocate_model,
-                    inputs=[model_dropdown],
+                    inputs=[model_dropdown, private_key],
                     outputs=[allocated_model],
                     api_name="allocate_model"
                 )
