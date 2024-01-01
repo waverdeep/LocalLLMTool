@@ -24,9 +24,9 @@ with gr.Group() as head_info_group:
     gr.Dropdown(
         choices=[
             "Mistral-7B-OpenOrca-GGUF",
-            "Mistral-7B-Instruct-v0.2",
             "OpenAI-GPT-3.5-Turbo"
-        ]
+        ],
+        value="Mistral-7B-OpenOrca-GGUF"
     )
     gr.Button(
         value="Select Model"
