@@ -58,4 +58,4 @@ jobs:
       - name: Docker run
         run: |
           docker stop ${{ env.NAME }} && docker rm ${{ env.NAME }} && docker rmi ${{ env.DOCKER_IMAGE }}:latest
-          docker run -d -p 8000:8000 -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} --name local_llm_tool --restart always ${{ env.DOCKER_IMAGE }}:latest
+          docker run -d -p 8000:8000 -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} -e MY_ACCESS_KEY=${{ secrets.MY_ACCESS_KEY }} --name local_llm_tool --restart always ${{ env.DOCKER_IMAGE }}:latest
