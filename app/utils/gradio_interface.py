@@ -11,7 +11,8 @@ allowed_models = [
 ]
 
 config = {
-    "OPENAI_API_KEY":  os.environ.get('OPENAI_API_KEY', None),
+    "OPENAI_API_KEY": os.environ.get('OPENAI_API_KEY', None),
+    "MY_ACCESS_KEY": os.environ.get('MY_ACCESS_KEY', None),
 }
 
 chat_client = util.register_openai_api_key(config['OPENAI_API_KEY'])
@@ -20,6 +21,7 @@ chat_client = util.register_openai_api_key(config['OPENAI_API_KEY'])
 def predict(message, history, model_name, system_prompt, temperature, access_key):
     global chat_client
     global allowed_models
+    global config
 
     if "gpt" in model_name and chat_client is None:
         yield "Please register the openai api key."
@@ -29,7 +31,7 @@ def predict(message, history, model_name, system_prompt, temperature, access_key
         yield "Please select the model again."
         return
 
-    if access_key != "20240101":
+    if access_key != config['MY_ACCESS_KEY']:
         yield "Please check the my access key."
         return
 
