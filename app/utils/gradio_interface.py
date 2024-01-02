@@ -1,20 +1,20 @@
-import gradio as gr
+import os
 import time
-from openai import OpenAI
+import gradio as gr
 
-chat_client = None
+import utils.util as util
+
+
 allowed_models = [
     "gpt-3.5-turbo-1106",
     "gpt-4-1106-preview",
 ]
 
+config = {
+    "OPENAI_API_KEY":  os.environ.get('OPENAI_API_KEY', None),
+}
 
-def register_openai_api_key(secret_key):
-    global chat_client
-    if secret_key != "":
-        chat_client = OpenAI(api_key=secret_key)
-    else:
-        chat_client = None
+chat_client = util.register_openai_api_key(config['OPENAI_API_KEY'])
 
 
 def predict(message, history, model_name, system_prompt, temperature, access_key):
@@ -91,23 +91,3 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
     with gr.Row():
         with gr.Column():
             chat.render()
-    with gr.Row():
-        with gr.Column():
-            with gr.Group():
-                gr.Label(
-                    value="Set OpenAI API",
-                    label="setting"
-                ),
-                secret_key = gr.Textbox(
-                    label="secret key"
-                )
-                register_openai_api_key_button = gr.Button(
-                    value="Register"
-                )
-                register_openai_api_key_button.click(
-                    fn=register_openai_api_key,
-                    inputs=[secret_key],
-                    outputs=None,
-                    api_name="register_openai_api_key"
-                )
-    
