@@ -68,6 +68,7 @@ chat = gr.ChatInterface(
         scale=7
     ),
     stop_btn=None,
+    additional_inputs_accordion_name="configurations",
     additional_inputs=[
         gr.Dropdown(
             choices=allowed_models,
@@ -87,7 +88,7 @@ chat = gr.ChatInterface(
         gr.Textbox(
             label="my access key",
             type="password"
-        )
+        ),
     ],
 ).queue()
 
@@ -98,12 +99,9 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
     with gr.Row():
         with gr.Column():
             with gr.Blocks():
-                session = gr.State(time.time())
                 gr.Label(
-                    value="Configurations"
+                    value="Additional Tools"
                 )
-                session_id = gr.Textbox(
-                    value=session.value,
-                    label="session_id",
-                    interactive=False
+                save_button = gr.Button(
+                    value="Save",
                 )
