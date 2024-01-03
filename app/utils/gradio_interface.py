@@ -72,7 +72,7 @@ def update_dataframe():
 
 
 chat = gr.ChatInterface(
-    util.predict,
+    predict,
     chatbot=gr.Chatbot(height="60vh"),
     textbox=gr.Textbox(
         placeholder="무엇이든 물어보세요!", 
