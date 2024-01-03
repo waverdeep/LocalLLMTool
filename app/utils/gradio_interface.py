@@ -72,7 +72,7 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
                 )
                 save_button.click(
                     save_chat_history,
-                    inputs=[chat.history],
+                    inputs=[chat.chatbot],
                     outputs=None
                 )
                 chat_history = gr.DataFrame(
