@@ -101,7 +101,7 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
                     value="Configurations"
                 )
                 session_id = gr.Textbox(
-                    value=time.time.time(),
+                    value=time.time(),
                     label="session_id",
                     interactive=False
                 )
