@@ -1,6 +1,7 @@
 import os
 import time
 import gradio as gr
+import pandas as pd
 
 import utils.util as util
 
