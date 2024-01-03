@@ -77,6 +77,6 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
                 )
                 chat_history = gr.DataFrame(
                     headers=["session_id", "title"],
-                    datatype=["float", "str"],
+                    datatype=["number", "str"],
                     value=None,
                 )
