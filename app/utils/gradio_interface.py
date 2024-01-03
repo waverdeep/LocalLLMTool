@@ -15,6 +15,8 @@ config = {
     "MY_ACCESS_KEY": os.environ.get('MY_ACCESS_KEY', None),
 }
 
+custom_session = []
+
 chat_client = util.register_openai_api_key(config['OPENAI_API_KEY'])
 
 
@@ -93,3 +95,13 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
     with gr.Row():
         with gr.Column():
             chat.render()
+        with gr.Column():
+            with gr.Group():
+                gr.Label(
+                    value="Configurations"
+                )
+                session_id = gr.Textbox(
+                    value=time.time.time(),
+                    label="session_id",
+                    interactive=False
+                )
