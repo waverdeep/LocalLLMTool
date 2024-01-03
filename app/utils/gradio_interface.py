@@ -103,7 +103,7 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
                     value="Configurations"
                 )
                 session_id = gr.Textbox(
-                    value=session,
+                    value=session.value,
                     label="session_id",
                     interactive=False
                 )
