@@ -16,12 +16,58 @@ config = {
 }
 
 chat_client = util.register_openai_api_key(config['OPENAI_API_KEY'])
+initial_dataframe = pd.DataFrame({"Column1": [], "Column2": []})
+
+
+def predict(message, history, model_name, system_prompt, temperature, access_key):
+    global chat_client
+    global allowed_models
+    global config
+
+    if "gpt" in model_name and chat_client is None:
+        yield "Please register the openai api key."
+        return
+
+    if model_name not in allowed_models:
+        yield "Please select the model again."
+        return
+
+    if access_key != config['MY_ACCESS_KEY']:
+        yield "Please check the my access key."
+        return
+
+    history_openai_format = []
+    if system_prompt != "":
+        history_openai_format.append({"role": "system", "content": system_prompt })
+    for human, assistant in history:
+        history_openai_format.append({"role": "user", "content": human })
+        history_openai_format.append({"role": "assistant", "content":assistant})
+    history_openai_format.append({"role": "user", "content": message})
+
+    stream = chat_client.chat.completions.create(
+        model=model_name,
+        messages= history_openai_format,
+        temperature=temperature,
+        stream=True
+    )
+
+    partial_message = ""
+    for chunk in stream:
+        if chunk.choices[0].delta.content is not None:
+            partial_message = partial_message + chunk.choices[0].delta.content
+            yield partial_message
 
 
 def save_chat_history(history):
-    chat_history.input(
-        inputs=[39203.20, "hello?"]
-    )
+    pass
+
+
+def update_dataframe():
+    # 여기에 데이터 프레임을 갱신하는 코드를 작성합니다.
+    # 예: 새로운 행 추가
+    new_row = {"Column1": "New Value1", "Column2": "New Value2"}
+    updated_dataframe = initial_dataframe.append(new_row, ignore_index=True)
+    return updated_dataframe
 
 
 chat = gr.ChatInterface(
@@ -75,8 +121,8 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
                     inputs=[chat.chatbot],
                     outputs=None
                 )
-                chat_history = gr.DataFrame(
-                    headers=["session_id", "title"],
-                    datatype=["number", "str"],
-                    value=None,
+                gr.Interface(
+                    fn=update_dataframe,
+                    inputs=gr.Button(),
+                    outputs="dataframe"
                 )
