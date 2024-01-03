@@ -1,7 +1,6 @@
 import os
 import time
 import gradio as gr
-import pandas as pd
 
 import utils.util as util
 
@@ -17,7 +16,6 @@ config = {
 }
 
 chat_client = util.register_openai_api_key(config['OPENAI_API_KEY'])
-initial_dataframe = pd.DataFrame({"Column1": [], "Column2": []})
 
 
 def predict(message, history, model_name, system_prompt, temperature, access_key):
@@ -57,18 +55,6 @@ def predict(message, history, model_name, system_prompt, temperature, access_key
         if chunk.choices[0].delta.content is not None:
             partial_message = partial_message + chunk.choices[0].delta.content
             yield partial_message
-
-
-def save_chat_history(history):
-    pass
-
-
-def update_dataframe():
-    # 여기에 데이터 프레임을 갱신하는 코드를 작성합니다.
-    # 예: 새로운 행 추가
-    new_row = {"Column1": "New Value1", "Column2": "New Value2"}
-    updated_dataframe = initial_dataframe.append(new_row, ignore_index=True)
-    return updated_dataframe
 
 
 chat = gr.ChatInterface(
@@ -121,9 +107,4 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
                     save_chat_history,
                     inputs=[chat.chatbot],
                     outputs=None
-                )
-                gr.Interface(
-                    fn=update_dataframe,
-                    inputs=gr.Button(),
-                    outputs="dataframe"
                 )
