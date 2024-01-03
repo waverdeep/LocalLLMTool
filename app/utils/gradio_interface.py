@@ -103,8 +103,3 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
                 save_button = gr.Button(
                     value="Save chat history",
                 )
-                save_button.click(
-                    save_chat_history,
-                    inputs=[chat.chatbot],
-                    outputs=None
-                )
