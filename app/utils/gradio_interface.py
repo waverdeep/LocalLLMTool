@@ -95,13 +95,15 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
     with gr.Row():
         with gr.Column():
             chat.render()
+    with gr.Row():
         with gr.Column():
-            with gr.Group():
+            with gr.Blocks():
+                session = gr.State(time.time())
                 gr.Label(
                     value="Configurations"
                 )
                 session_id = gr.Textbox(
-                    value=time.time(),
+                    value=session,
                     label="session_id",
                     interactive=False
                 )
