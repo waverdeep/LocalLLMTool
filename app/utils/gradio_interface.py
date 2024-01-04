@@ -3,7 +3,7 @@ import time
 import gradio as gr
 
 import utils.util as util
-from configs import *
+from utils.configs import *
 
 
 chat_client = util.register_openai_api_key(config['OPENAI_API_KEY'])
