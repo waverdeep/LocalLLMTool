@@ -98,4 +98,4 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
                     outputs=[result_textbox]
                 )
                 
-_
+
