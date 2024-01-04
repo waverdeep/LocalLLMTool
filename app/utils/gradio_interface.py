@@ -79,10 +79,23 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
         with gr.Column(scale=7):
             chat.render()
         with gr.Column(scale=3):
-            with gr.Blocks():
+            with gr.Group():
                 gr.Label(
                     value="Additional Tools"
+                )
+                title_textbox = gr.Textbox(
+                    label="chat title"
                 )
                 save_button = gr.Button(
                     value="Save chat history",
                 )
+                result_textbox = gr.Textbox(
+                    label="temp output"
+                )
+                save_button.click(
+                    util.save_button_event,
+                    inputs=[chat.chatbot, title_textbox],
+                    outputs=[result_textbox]
+                )
+                
+_

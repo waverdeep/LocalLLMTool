@@ -17,6 +17,10 @@ def get_conversation(system_prompt, history, message):
     for human, assistant in history:
         conversation.append({"role": "user", "content": human })
         conversation.append({"role": "assistant", "content":assistant})
-        
+
     conversation.append({"role": "user", "content": message})
     return conversation
+
+
+def save_button_event(history, title):
+    return f"{history}"
