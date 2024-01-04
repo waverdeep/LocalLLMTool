@@ -92,7 +92,7 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
                 result_dataframe = gr.DataFrame(
                     headers=["id", "title"],
                     datatype=["number", "str"],
-                    value=None,
+                    value=[[time.time(), "what's up!"]],
                     type="pandas",
                     interactive=False
                 )
