@@ -89,19 +89,16 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
                 save_button = gr.Button(
                     value="Save chat history",
                 )
-                result_textbox = gr.Textbox(
-                    label="temp output"
-                )
                 result_dataframe = gr.DataFrame(
                     headers=["id", "title"],
                     datatype=["number", "str"],
-                    value=[[123,"hello"]],
+                    value=[],
                     type="pandas"
                 )
                 save_button.click(
                     util.save_button_event,
                     inputs=[chat.chatbot, title_textbox, result_dataframe],
-                    outputs=[result_textbox, result_dataframe]
+                    outputs=[result_dataframe, title_textbox]
                 )
                 
 
