@@ -28,7 +28,7 @@ def predict(message, history, model_name, system_prompt, temperature, access_key
 
     stream = chat_client.chat.completions.create(
         model=model_name,
-        messages= get_conversation(system_prompt, history, meesage),
+        messages= util.get_conversation(system_prompt, history, meesage),
         temperature=temperature,
         stream=True
     )
