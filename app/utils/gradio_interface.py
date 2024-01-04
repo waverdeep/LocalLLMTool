@@ -1,19 +1,10 @@
-import os
+
 import time
 import gradio as gr
 
 import utils.util as util
+from configs import *
 
-
-allowed_models = [
-    "gpt-3.5-turbo-1106",
-    "gpt-4-1106-preview",
-]
-
-config = {
-    "OPENAI_API_KEY": os.environ.get('OPENAI_API_KEY', None),
-    "MY_ACCESS_KEY": os.environ.get('MY_ACCESS_KEY', None),
-}
 
 chat_client = util.register_openai_api_key(config['OPENAI_API_KEY'])
 
@@ -35,17 +26,9 @@ def predict(message, history, model_name, system_prompt, temperature, access_key
         yield "Please check the my access key."
         return
 
-    history_openai_format = []
-    if system_prompt != "":
-        history_openai_format.append({"role": "system", "content": system_prompt })
-    for human, assistant in history:
-        history_openai_format.append({"role": "user", "content": human })
-        history_openai_format.append({"role": "assistant", "content":assistant})
-    history_openai_format.append({"role": "user", "content": message})
-
     stream = chat_client.chat.completions.create(
         model=model_name,
-        messages= history_openai_format,
+        messages= get_conversation(system_prompt, history, meesage),
         temperature=temperature,
         stream=True
     )
