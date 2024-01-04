@@ -92,9 +92,14 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
                 result_textbox = gr.Textbox(
                     label="temp output"
                 )
+                result_dataframe = gr.DataFrame(
+                    headers=["id", "title"],
+                    datatype=["number", "str"],
+                    value=[[123,"hello"]]
+                )
                 save_button.click(
                     util.save_button_event,
-                    inputs=[chat.chatbot, title_textbox],
+                    inputs=[chat.chatbot, title_textbox, result_dataframe],
                     outputs=[result_textbox]
                 )
                 
