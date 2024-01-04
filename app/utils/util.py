@@ -25,5 +25,8 @@ def get_conversation(system_prompt, history, message):
 
 
 def save_button_event(history, title, dataframe):
+    if title == "":
+        return dataframe, ""
+        
     dataframe.loc[len(dataframe)] = [time.time(), title]
     return dataframe, ""

@@ -84,7 +84,8 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
                     value="Additional Tools"
                 )
                 title_textbox = gr.Textbox(
-                    label="chat title"
+                    label="chat title",
+                    placeholder="제목을 꼭 입력해주세요 (나중엔 자동화할 것!)"
                 )
                 save_button = gr.Button(
                     value="Save chat history",
