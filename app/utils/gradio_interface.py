@@ -101,7 +101,7 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
                 save_button.click(
                     util.save_button_event,
                     inputs=[chat.chatbot, title_textbox, result_dataframe],
-                    outputs=[result_textbox]
+                    outputs=[result_textbox, result_dataframe]
                 )
                 
 
