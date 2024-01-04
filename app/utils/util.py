@@ -1,5 +1,5 @@
 import time
-
+import pandas as pd
 from openai import OpenAI
 
 
@@ -27,4 +27,5 @@ def get_conversation(system_prompt, history, message):
 def save_button_event(history, title, dataframe):
     id = time.time()
 
-    return f"{history} {title} {dataframe}"
+
+    return f"{history} {title} {dataframe} {type(dataframe)}"

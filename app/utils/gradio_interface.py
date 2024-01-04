@@ -95,7 +95,8 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
                 result_dataframe = gr.DataFrame(
                     headers=["id", "title"],
                     datatype=["number", "str"],
-                    value=[[123,"hello"]]
+                    value=[[123,"hello"]],
+                    type="pandas"
                 )
                 save_button.click(
                     util.save_button_event,
