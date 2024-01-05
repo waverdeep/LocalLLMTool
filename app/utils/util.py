@@ -29,4 +29,4 @@ def save_button_event(history, title, dataframe):
         return dataframe, ""
         
     dataframe.loc[len(dataframe)] = [time.time(), title]
-    return dataframe, ""
+    return dataframe, "", [[{"role": "user", "content": "human" }, {"role": "assistant", "content":"assistant"}]]
