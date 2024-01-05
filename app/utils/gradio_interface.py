@@ -14,6 +14,8 @@ def predict(message, history, model_name, system_prompt, temperature, access_key
     global allowed_models
     global config
 
+    title_textbox.value = time.time()
+
     if "gpt" in model_name and chat_client is None:
         yield "Please register the openai api key."
         return
