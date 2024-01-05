@@ -76,6 +76,21 @@ chat = gr.ChatInterface(
 
 with gr.Blocks(theme="soft", title="MLT",) as demo:
     with gr.Row():
+        with gr.Group():
+            start_button = gr.Button(
+                value="Start Chat"
+            )
+            chat_id_textbox = gr.Textbox(
+                value="",
+                label="chat_id",
+                interactive=False
+            )
+            start_button.click(
+                utils.create_chat_id,
+                inputs=[],
+                outputs=[chat_id_textbox]
+            )
+    with gr.Row():
         with gr.Column(scale=7):
             chat.render()
         with gr.Column(scale=3):

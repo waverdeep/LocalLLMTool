@@ -27,6 +27,12 @@ def get_conversation(system_prompt, history, message):
 def save_button_event(history, title, dataframe):
     if title == "":
         return dataframe, ""
+
+    id = time.time()
         
     dataframe.loc[len(dataframe)] = [time.time(), title]
     return dataframe, "", [["what", "the"]]
+
+
+def create_chat_id():
+    return time.time()
