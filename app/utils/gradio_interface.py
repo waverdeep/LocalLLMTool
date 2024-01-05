@@ -9,10 +9,14 @@ from utils.configs import *
 chat_client = util.register_openai_api_key(config['OPENAI_API_KEY'])
 
 
-def predict(message, history, model_name, system_prompt, temperature, access_key):
+def predict(message, history, model_name, system_prompt, temperature, access_key, chat_id):
     global chat_client
     global allowed_models
     global config
+
+    if chat_id == "":
+        yield "Please click 'Start Chat' button."
+        return
 
     if "gpt" in model_name and chat_client is None:
         yield "Please register the openai api key."
@@ -39,6 +43,11 @@ def predict(message, history, model_name, system_prompt, temperature, access_key
             partial_message = partial_message + chunk.choices[0].delta.content
             yield partial_message
 
+chat_id_textbox = gr.Textbox(
+    value="",
+    label="chat_id",
+    interactive=False
+)
 
 chat = gr.ChatInterface(
     predict,
@@ -70,6 +79,7 @@ chat = gr.ChatInterface(
             label="my access key",
             type="password"
         ),
+        chat_id_textbox
     ],
 ).queue()
 
@@ -80,11 +90,7 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
             start_button = gr.Button(
                 value="Start Chat"
             )
-            chat_id_textbox = gr.Textbox(
-                value="",
-                label="chat_id",
-                interactive=False
-            )
+            chat_id_textbox
             start_button.click(
                 util.create_chat_id,
                 inputs=[],
