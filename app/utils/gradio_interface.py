@@ -47,7 +47,7 @@ chat_id_textbox = gr.Textbox(
     value="",
     label="chat_id",
     interactive=False
-)
+).unrender()
 
 chat = gr.ChatInterface(
     predict,
