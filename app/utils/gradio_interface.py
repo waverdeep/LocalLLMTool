@@ -43,6 +43,12 @@ def predict(message, history, model_name, system_prompt, temperature, access_key
             partial_message = partial_message + chunk.choices[0].delta.content
             yield partial_message
 
+chat_id_hidden = gr.Textbox(
+    value="",
+    label="chat_id",
+    interactive=False
+)
+
 
 chat = gr.ChatInterface(
     predict,
@@ -74,7 +80,7 @@ chat = gr.ChatInterface(
             label="my access key",
             type="password"
         ),
-        chat_id_textbox
+        chat_id_hidden
     ],
 ).queue()
 
@@ -87,7 +93,7 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
             )
             chat_id_textbox = gr.Textbox(
                 value="",
-                label="chat_id",
+                label="chat id",
                 interactive=False
             )
             start_button.click(
