@@ -90,7 +90,7 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
             start_button = gr.Button(
                 value="Start Chat"
             )
-            chat_id_textbox
+            chat_id_textbox.render()
             start_button.click(
                 util.create_chat_id,
                 inputs=[],
