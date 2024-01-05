@@ -86,7 +86,7 @@ with gr.Blocks(theme="soft", title="MLT",) as demo:
                 interactive=False
             )
             start_button.click(
-                utils.create_chat_id,
+                util.create_chat_id,
                 inputs=[],
                 outputs=[chat_id_textbox]
             )
