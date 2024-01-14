@@ -2,10 +2,11 @@
 import gradio as gr
 from quick_chat.user_interface import quick_chat
 from custom_chat.user_interface import custom_chat
+from imagine.user_interface import imagine
 
 
 if __name__ == '__main__':
-    demo = gr.TabbedInterface([quick_chat.render(), custom_chat],["Quick", "Chat"], title="MLT", theme="soft")
+    demo = gr.TabbedInterface([custom_chat, imagine],["Chat", "Imagine"], title="MLT", theme="soft")
 
     demo.launch(
         server_name="0.0.0.0",

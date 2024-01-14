@@ -6,7 +6,10 @@ from custom_chat import callbacks
 with gr.Blocks() as custom_chat:
     with gr.Row():
         with gr.Column(scale=7):
-            chatbot = gr.Chatbot()
+            chatbot = gr.Chatbot(
+                height="60vh",
+                container=False
+            )
             with gr.Group():
                 input_textbox = gr.Textbox(
                     show_label=False,
