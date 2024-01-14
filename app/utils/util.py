@@ -36,3 +36,4 @@ def save_button_event(history, title, dataframe):
 
 def create_chat_id():
     return time.time()
+
