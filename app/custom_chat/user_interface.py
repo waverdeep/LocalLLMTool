@@ -6,7 +6,10 @@ from custom_chat import callbacks
 with gr.Blocks() as custom_chat:
     with gr.Row():
         with gr.Column(scale=7):
-            chatbot = gr.Chatbot()
+            chatbot = gr.Chatbot(
+                height="60vh",
+                container=False
+            )
             with gr.Group():
                 input_textbox = gr.Textbox(
                     show_label=False,
@@ -18,6 +21,11 @@ with gr.Blocks() as custom_chat:
                     value="Send",
                     interactive=True,
                 )
+            with gr.Row():
+                retry_button = gr.Button("Retry")
+                undo_button = gr.Button("Undo")
+                clear_button = gr.Button("Clear")
+
         with gr.Column(scale=3):
             with gr.Group():
                 chat_id_textbox = gr.Textbox(
@@ -44,7 +52,7 @@ with gr.Blocks() as custom_chat:
                 label="connect key",
                 type="password"
             )
-
+            
     send_button.click(
         callbacks.user,
         inputs=[chat_id_textbox, input_textbox, chatbot],
@@ -54,3 +62,15 @@ with gr.Blocks() as custom_chat:
         inputs=[chatbot, model_dropdown, access_key_textbox, temperature_slider, system_prompt_textbox],
         outputs=[chatbot]
     )
+
+    input_textbox.submit(
+        callbacks.user,
+        inputs=[chat_id_textbox, input_textbox, chatbot],
+        outputs=[chat_id_textbox, input_textbox, chatbot]
+    ).then(
+        callbacks.chat_completion,
+        inputs=[chatbot, model_dropdown, access_key_textbox, temperature_slider, system_prompt_textbox],
+        outputs=[chatbot]
+    )
+
+    clear_button.click(lambda: None, None, chatbot, queue=False)
