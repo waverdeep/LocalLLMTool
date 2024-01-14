@@ -63,4 +63,32 @@ with gr.Blocks() as chat_demo:
             outputs=[chat_id_textbox, chatbot, input_textbox]
         )
 
-demo = gr.TabbedInterface([chat_demo, history_demo, config_demo],["Chat", "history", "Config"], title="MLT", theme="soft")
+with gr.ChatInterface(
+    predict,
+    additional_inputs=[
+        gr.Textbox(
+            type="password",
+            label="connect key"
+        ),
+        gr.Dropdown(
+            choices=allowed_models,
+            value="gpt-3.5-turbo-1106",
+            interactive=True,
+            label="selet model"
+        ),
+        gr.Textbox(
+            label="system prompt",
+        ), 
+        gr.Slider(
+            minimum=0, 
+            maximum=1, 
+            step=0.1,
+            value=0.5,
+            label="temperature"
+        )
+    ]
+).queue() as quick_chat:
+    pass
+    
+
+demo = gr.TabbedInterface([quick_chat.render(), chat_demo, history_demo, config_demo],["Quick", "Chat", "history", "Config"], title="MLT", theme="soft")
