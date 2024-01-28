@@ -36,7 +36,7 @@ with gr.Blocks() as custom_chat:
                 choices=configs.allowed_models,
                 value="gpt-3.5-turbo-1106",
                 interactive=True,
-                label="selet model"
+                label="select model"
             )
             system_prompt_textbox = gr.Textbox(
                 label="system prompt",
