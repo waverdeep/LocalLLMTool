@@ -3,12 +3,13 @@ from fastapi import FastAPI
 import gradio as gr
 from gradio_app.custom_chat.user_interface import custom_chat
 from gradio_app.imagine_character.user_interface import imagine_character_ui
+from gradio_app.imagine_book_cover.user_interface import imagine_book_cover_ui
 
 
 app = FastAPI()
 demo = gr.TabbedInterface(
-    [custom_chat, imagine_character_ui],
-    ["Chat", "my character"],
+    [custom_chat, imagine_character_ui, imagine_book_cover_ui],
+    ["Chat", "my character", "book cover"],
     title="MLT",
     theme="soft"
 )
