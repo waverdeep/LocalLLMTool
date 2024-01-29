@@ -1,27 +1,36 @@
 import gradio as gr
 from utils import configs
-from gradio_app.imagine_character import callbacks
+from gradio_app.imagine_book_cover import callbacks
 
 
-with gr.Blocks() as imagine_character_ui:
+with gr.Blocks() as imagine_book_cover_ui:
     with gr.Row():
         with gr.Column(scale=7):
-            imagine_image = gr.Image()
+            imagine_image = gr.Image(interactive=False)
         with gr.Column(scale=3):
             access_key_textbox = gr.Textbox(
                 label="connect key",
                 type="password"
             )
-            input_prompt = gr.Textbox(
-                label="character description",
+            input_title = gr.Textbox(
+                label="소설 제목",
                 interactive=True,
-                lines=2,
-                max_lines=5
+                placeholder="태양의 사막에서의 리플레이"
             )
-            default_prompt = gr.Textbox(
+            input_chapter = gr.Textbox(
+                label="챕터 명 혹은 부제목",
+                interactive=True,
+                placeholder=""
+            )
+            input_content = gr.Textbox(
+                label="내용 혹은 요약",
+                interactive=True,
+                max_lines=7
+            )
+            guide_prompt = gr.Textbox(
                 label="guide prompt",
                 interactive=True,
-                value="정방형, 판타지, 상반신 초점 아이콘"
+                value="판타지, 이미지 생성 사이즈는 1024*1747, 레터박스 없는 꽉찬 커버 이미지"
             )
             chat_model_dropdown = gr.Dropdown(
                 choices=configs.allowed_models,
@@ -33,7 +42,8 @@ with gr.Blocks() as imagine_character_ui:
                 value="generate prompt",
             )
             generate_prompt_textbox = gr.Textbox(
-                label="generated prompt"
+                label="generated prompt",
+                max_lines=7
             )
             imagine_model_dropdown = gr.Dropdown(
                 label="select imagine model",
@@ -45,8 +55,9 @@ with gr.Blocks() as imagine_character_ui:
                 value="dall-e-3"
             )
             imagine_button = gr.Button(
-                value="imagine my character"
+                value="imagine book cover"
             )
+
 
     generate_prompt_button.click(
         callbacks.start_generate,
@@ -54,7 +65,7 @@ with gr.Blocks() as imagine_character_ui:
         outputs=[generate_prompt_textbox]
     ).then(
         callbacks.generate_prompt,
-        inputs=[access_key_textbox, chat_model_dropdown, input_prompt, default_prompt],
+        inputs=[access_key_textbox, chat_model_dropdown, input_title, input_chapter, input_content, guide_prompt],
         outputs=[generate_prompt_textbox]
     )
 
@@ -63,3 +74,4 @@ with gr.Blocks() as imagine_character_ui:
         inputs=[access_key_textbox, imagine_model_dropdown, generate_prompt_textbox],
         outputs=[imagine_image]
     )
+
